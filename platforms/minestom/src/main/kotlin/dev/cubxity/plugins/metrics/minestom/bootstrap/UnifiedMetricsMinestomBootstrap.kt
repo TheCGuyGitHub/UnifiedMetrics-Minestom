@@ -23,11 +23,15 @@ import dev.cubxity.plugins.metrics.common.UnifiedMetricsBootstrap
 import dev.cubxity.plugins.metrics.common.plugin.dispatcher.CurrentThreadDispatcher
 import dev.cubxity.plugins.metrics.minestom.UnifiedMetricsMinestomPlugin
 import dev.cubxity.plugins.metrics.minestom.logger.Slf4jLogger
+import java.nio.file.Path
 import kotlinx.coroutines.CoroutineDispatcher
 import net.minestom.server.MinecraftServer
-import java.nio.file.Path
+import org.slf4j.LoggerFactory
 
-class UnifiedMetricsMinestomBootstrap(private val extension: UnifiedMetricsMinestomExtension) : UnifiedMetricsBootstrap {
+class UnifiedMetricsMinestomBootstrap(
+    override val dataDirectory: Path,
+    override val configDirectory: Path,
+) : UnifiedMetricsBootstrap {
     private val plugin = UnifiedMetricsMinestomPlugin(this)
 
     override val type: PlatformType
@@ -39,14 +43,7 @@ class UnifiedMetricsMinestomBootstrap(private val extension: UnifiedMetricsMines
     override val serverBrand: String
         get() = MinecraftServer.getBrandName()
 
-    override val dataDirectory: Path
-       get() = extension.dataDirectory
-
-    override val configDirectory: Path
-        get() = extension.dataDirectory
-
-    override val logger: Logger = Slf4jLogger(extension.logger)
-
+    override val logger: Logger = Slf4jLogger(LoggerFactory.getLogger("UnifiedMetrics"))
     override val dispatcher: CoroutineDispatcher = CurrentThreadDispatcher
 
     fun initialize() {
