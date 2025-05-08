@@ -24,11 +24,10 @@ import net.minestom.server.MinecraftServer
 
 class ServerCollector : Collector {
     override fun collect(): List<Metric> {
-        val extensionCount = MinecraftServer.getExtensionManager().extensions.size
         val playerCount = MinecraftServer.getConnectionManager().onlinePlayers.size
 
         return listOf(
-            GaugeMetric("minecraft_plugins", value = extensionCount),
+            GaugeMetric("minecraft_plugins", value = 0),
             GaugeMetric("minecraft_players_count", value = playerCount),
             // Minestom does not have a "max players" count
             GaugeMetric("minecraft_players_max", value = playerCount + 1)
