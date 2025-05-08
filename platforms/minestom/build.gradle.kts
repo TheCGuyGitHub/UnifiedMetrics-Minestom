@@ -20,6 +20,7 @@ plugins {
 }
 
 repositories {
+    mavenCentral()
     maven("https://repo.spongepowered.org/maven")
     maven("https://jitpack.io")
 }
@@ -42,20 +43,13 @@ tasks {
         relocate("io.prometheus", "dev.cubxity.plugins.metrics.libs.io.prometheus")
     }
     compileKotlin {
-        kotlinOptions.jvmTarget = "17"
+        kotlinOptions.jvmTarget = "21"
     }
     compileTestKotlin {
-        kotlinOptions.jvmTarget = "17"
-    }
-    processResources {
-        filesMatching("extension.json") {
-            expand(
-                "version" to project.version
-            )
-        }
+        kotlinOptions.jvmTarget = "21"
     }
 }
 
 java {
-    targetCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_21
 }
