@@ -20,3 +20,50 @@ dependencies {
     implementation(project(":unifiedmetrics-driver-influx"))
     implementation(project(":unifiedmetrics-driver-prometheus"))
 }
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+
+            versionMapping {
+                usage("java-api") {
+                    fromResolutionOf("runtimeClasspath")
+                }
+                usage("java-runtime") {
+                    fromResolutionResult()
+                }
+            }
+
+            pom {
+                name.set("UnifiedMetrics")
+                description.set("UnifiedMetrics is a fully-featured free and open-source metrics collection plugin for Minecraft servers.")
+                url.set("https://github.com/Cubxity/UnifiedMetrics/")
+
+                licenses {
+                    license {
+                        name.set("GNU Lesser General Public License v3.0")
+                        url.set("https://github.com/Cubxity/UnifiedMetrics/blob/dev/0.3.x/COPYING.LESSER")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("cubxity")
+                        name.set("Cubxity")
+                        email.set("contact@cubxity.dev")
+                    }
+                }
+                scm {
+                    connection.set("scm:git:git://github.com/Cubxity/UnifiedMetrics.git")
+                    developerConnection.set("scm:git:ssh://github.com/Cubxity/UnifiedMetrics.git")
+                    url.set("https://github.com/Cubxity/UnifiedMetrics/")
+                }
+            }
+        }
+    }
+}
