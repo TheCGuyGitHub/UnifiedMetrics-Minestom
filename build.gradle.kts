@@ -58,24 +58,26 @@ subprojects {
             maven {
                 name = "central"
                 url = if (version.toString().endsWith("SNAPSHOT")) {
-                    uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+                    uri("https://repo.vulpescloud.de/private/")
+                    //uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
                 } else {
-                    uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+                    uri("https://repo.vulpescloud.de/private/")
+                    //uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
                 }
                 credentials {
-                    username = System.getenv("MAVEN_REPO_USER")
-                    password = System.getenv("MAVEN_REPO_PASS")
+                    username = System.getenv("REPO_USERNAME")
+                    password = System.getenv("REPO_PASSWORD")
                 }
             }
         }
     }
     afterEvaluate {
-        configure<SigningExtension> {
-            sign(configurations["archives"])
-        }
+        // configure<SigningExtension> {
+        //     sign(configurations["archives"])
+        // }
         tasks.findByName("shadowJar")?.also {
             tasks.named("assemble") { dependsOn(it) }
-            tasks.named("signArchives") { dependsOn(it) }
+            // tasks.named("signArchives") { dependsOn(it) }
         }
     }
 }

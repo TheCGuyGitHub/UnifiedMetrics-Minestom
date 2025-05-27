@@ -24,7 +24,7 @@ import net.minestom.server.MinecraftServer
 
 class ServerCollector : Collector {
     override fun collect(): List<Metric> {
-        val extensionCount = MinecraftServer.getExtensionManager().extensions.size
+        val extensionCount = 0
         val playerCount = MinecraftServer.getConnectionManager().onlinePlayers.size
 
         return listOf(

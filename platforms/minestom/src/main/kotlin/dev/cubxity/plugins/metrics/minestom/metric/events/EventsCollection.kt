@@ -25,7 +25,7 @@ import net.minestom.server.event.EventListener
 import net.minestom.server.event.player.AsyncPlayerPreLoginEvent
 import net.minestom.server.event.player.PlayerChatEvent
 import net.minestom.server.event.player.PlayerDisconnectEvent
-import net.minestom.server.event.player.PlayerLoginEvent
+import net.minestom.server.event.player.AsyncPlayerConfigurationEvent
 import net.minestom.server.event.server.ServerListPingEvent
 
 class EventsCollection : CollectorCollection {
@@ -37,7 +37,7 @@ class EventsCollection : CollectorCollection {
     private val pingCounter = Counter("minecraft_events_ping_total")
 
     private val loginListener = EventListener.of(AsyncPlayerPreLoginEvent::class.java) { loginCounter.inc() }
-    private val joinListener = EventListener.of(PlayerLoginEvent::class.java) { joinCounter.inc() }
+    private val joinListener = EventListener.of(AsyncPlayerConfigurationEvent::class.java) { joinCounter.inc() }
     private val disconnectListener = EventListener.of(PlayerDisconnectEvent::class.java) { quitCounter.inc() }
     private val chatListener = EventListener.of(PlayerChatEvent::class.java) { chatCounter.inc() }
     private val pingListener = EventListener.of(ServerListPingEvent::class.java) { pingCounter.inc() }
